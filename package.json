@@ -1,0 +1,57 @@
+{
+  "name": "@isaacs/hot-module-reload",
+  "version": "0.0.0",
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    "src"
+  ],
+  "description": "Gracefully reload your modules when they change. Only works with CJS, not ESM. Uses stat polling.",
+  "author": "Isaac Z. Schlueter <i@izs.me> (https://izs.me)",
+  "license": "ISC",
+  "scripts": {
+    "preprepare": "rimraf lib",
+    "prepare": "tsc",
+    "format": "prettier --write . --loglevel warn",
+    "test": "tap",
+    "snap": "tap",
+    "preversion": "npm test",
+    "postversion": "npm publish",
+    "prepublishOnly": "git push origin --follow-tags"
+  },
+  "devDependencies": {
+    "@types/node": "^18.0.4",
+    "@types/tap": "^15.0.7",
+    "clock-mock": "^1.0.6",
+    "prettier": "^2.6.2",
+    "rimraf": "^3.0.2",
+    "tap": "^16.2.0",
+    "ts-node": "^10.7.0",
+    "typescript": "^4.6.4"
+  },
+  "tap": {
+    "test-env": [
+      "NODE_ENV=testing"
+    ],
+    "node-arg": [
+      "--no-warnings",
+      "--loader",
+      "ts-node/esm"
+    ],
+    "ts": false
+  },
+  "prettier": {
+    "semi": false,
+    "printWidth": 75,
+    "tabWidth": 2,
+    "useTabs": false,
+    "singleQuote": true,
+    "jsxSingleQuote": false,
+    "bracketSameLine": true,
+    "arrowParens": "avoid",
+    "endOfLine": "lf"
+  },
+  "engines": {
+    "node": ">= 16"
+  }
+}
