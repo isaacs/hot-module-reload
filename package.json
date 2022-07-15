@@ -1,6 +1,6 @@
 {
   "name": "@isaacs/hot-module-reload",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "main": "lib/index.js",
   "files": [
     "lib",
