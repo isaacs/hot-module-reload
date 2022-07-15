@@ -10,7 +10,7 @@ those things (by making them global) means that they won't ever
 reload when the logic actually changes, either.
 
 This only actually works with Remix, only tested on
-remix-express, since that's what I use.  It relies on the fact
+remix-express, since that's what I use. It relies on the fact
 that it can rebuild its request handler as needed.
 
 If you find it useful as well, then that's lovely.
@@ -42,10 +42,11 @@ if (NODE_ENV !== 'production') {
     // server or doing other things that might need to be done
     // before the module can be safely reloaded.
     // no effect unless a callerModule is set as well.
-    callerRestart: () => new Promise(res => {
-      server.close(res)
-      server.closeAllConnections()
-    }),
+    callerRestart: () =>
+      new Promise(res => {
+        server.close(res)
+        server.closeAllConnections()
+      }),
 
     // the caller module that needs the special treatment
     // optional, but if not set, then callerRestart has no
@@ -56,12 +57,13 @@ if (NODE_ENV !== 'production') {
 
 // then call createRequestHandler for each request in dev, or
 // just one time up front for production
-app.all('*',
+app.all(
+  '*',
   NODE_ENV === 'production'
-  ? createRequestHandler({ build: require(BUILD_DIR) })
-  : (...args) =>
-    createRequestHandler({
-      build: require(BUILD_DIR),
-    })(...args)
+    ? createRequestHandler({ build: require(BUILD_DIR) })
+    : (...args) =>
+        createRequestHandler({
+          build: require(BUILD_DIR),
+        })(...args)
 )
 ```

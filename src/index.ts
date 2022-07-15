@@ -45,6 +45,7 @@ const myNodeModules = resolve(process.cwd(), 'node_modules').toLowerCase()
 const defaultFilter = (f: string) =>
   !f.toLowerCase().startsWith(myNodeModules)
 const mtimes = new Map<string, number>()
+let stop: ()=>void | undefined
 export const hotModuleReload = (
   /* istanbul ignore next - just a sensible default */
   {
@@ -56,6 +57,10 @@ export const hotModuleReload = (
     frequency: 250,
   }
 ): (() => void) => {
+  // do not initialize more than one time
+  if (stop) {
+    return stop
+  }
   if (process.env.NODE_ENV === 'production') {
     console.error(`
 
@@ -115,7 +120,7 @@ This will result in memory leaks, guaranteed.
   timer.unref()
   let stopped = false
 
-  const stop = () => {
+  stop = () => {
     /* istanbul ignore else - hard to hit */
     if (timer) {
       clearTimeout(timer)

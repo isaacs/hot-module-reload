@@ -5,5 +5,8 @@ import t from 'tap'
 const errors: any[] = []
 console.error = (...m: any) => errors.push(...m)
 import { hotModuleReload } from '../src/index'
-t.type(hotModuleReload(), 'function', 'function return value')
+const s = hotModuleReload()
+t.type(s, 'function', 'function return value')
+t.equal(hotModuleReload(), s, 'calling more than once returns same stop val')
 t.match(errors, [/\u26a0\ufe0f/], 'printed warning')
+t.equal(errors.length, 1, 'did not warn more than once')
